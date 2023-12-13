@@ -36,8 +36,8 @@ def on_auto_press():
 
 
 def on_auto_run_press():
-    keyboard.press(key_to_run)
-    keyboard.release(key_to_run)
+    keyboard.press("4")
+    keyboard.release("4")
 
 
 keyboard.add_hotkey(key_start, on_auto_press)
