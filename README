@@ -1,6 +1,6 @@
 Install:
-    <code> pip install keyboard <code>
+    pip install keyboard
 Run:
-    <code> python <name.py> <code>
+    python <name.py>
 PRO requirement:
     Require modules: keyboard
