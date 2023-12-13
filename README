@@ -1,8 +1,9 @@
 Install:
-    pip install keyboard
+    pip install keyboard, tk
 Run:
     python <name.py>
     OR
     yarn pro
 PRO requirement:
     Require modules: keyboard
+                     tk

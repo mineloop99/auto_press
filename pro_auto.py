@@ -1,6 +1,16 @@
 import keyboard
 import time
 import random
+import tkinter as tk
+import tkinter.messagebox as msgbox
+
+
+def show_message_pop_up(message, timeout=500):
+    root = tk.Tk()
+    root.withdraw()
+    root.after(timeout, root.destroy)
+    msgbox.showinfo("Info", message, master=root)
+
 
 on_running = False
 
@@ -10,7 +20,6 @@ key_stop = "="  # Must diff key start
 time_beetween_press = 0.1  # in second
 
 key_auto_move = ["a", "d"]  # Just two key only
-key_to_run = "]"  # Just one
 
 
 def on_auto_press():
@@ -20,9 +29,11 @@ def on_auto_press():
     else:
         on_running = True
     print("Auto started!")
+    show_message_pop_up("Started!")
     while on_running:
         if keyboard.is_pressed(key_stop):
             print("Auto stopped!")
+            show_message_pop_up("stopped!")
             on_running = False
             return
         random_number = random.randint(0, 1)
@@ -35,12 +46,5 @@ def on_auto_press():
         keyboard.release(key_auto_move[1])
 
 
-def on_auto_run_press():
-    keyboard.press("4")
-    keyboard.release("4")
-
-
 keyboard.add_hotkey(key_start, on_auto_press)
-
-keyboard.add_hotkey(key_to_run, on_auto_run_press)
 keyboard.wait()
