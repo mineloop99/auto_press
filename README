@@ -2,5 +2,7 @@ Install:
     pip install keyboard
 Run:
     python <name.py>
+    OR
+    yarn pro
 PRO requirement:
     Require modules: keyboard
