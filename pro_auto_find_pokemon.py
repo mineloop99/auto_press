@@ -77,7 +77,8 @@ def on_auto_press_with_run():
 
 
 def exit_program():
-    sys.exit()
+    show_message_pop_up("exit")
+    sys.exit(0)
 
 
 keyboard.add_hotkey(key_start, on_auto_press_no_run)
