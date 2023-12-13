@@ -1,0 +1,11 @@
+{
+  "name": "auto_press",
+  "version": "1.0.0",
+  "description": "Install:\r     <code> pip install keyboard <code>\r Run:\r     <code> python <name.py> <code>\r PRO requirement:\r     Require modules: keyboard",
+  "main": "index.js",
+  "scripts": {
+    "pro": "python pro_auto.py"
+  },
+  "author": "",
+  "license": "MIT"
+}
