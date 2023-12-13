@@ -4,7 +4,8 @@
   "description": "Install:\r     <code> pip install keyboard <code>\r Run:\r     <code> python <name.py> <code>\r PRO requirement:\r     Require modules: keyboard",
   "main": "index.js",
   "scripts": {
-    "pro": "python pro_auto_find_pokemon.py"
+    "pro": "python pro_auto_find_pokemon.py",
+    "get": "pip install keyboard, tk, mouse" 
   },
   "author": "",
   "license": "MIT"

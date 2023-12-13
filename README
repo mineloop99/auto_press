@@ -1,5 +1,5 @@
 Install:
-    pip install keyboard, tk
+    pip install keyboard, tk, mouse
 Run:
     python <name.py>
     OR
@@ -7,3 +7,4 @@ Run:
 PRO requirement:
     Require modules: keyboard
                      tk
+                     mouse
