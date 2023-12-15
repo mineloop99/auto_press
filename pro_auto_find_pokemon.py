@@ -7,7 +7,14 @@ import random
 import tkinter as tk
 import tkinter.messagebox as msgbox
 
-from const import AUTO_STARTED_LOG, AUTO_STOPPED_LOG, STARTED_LOG, STOPPED_LOG
+from const import (
+    AUTO_STARTED_LOG,
+    AUTO_STOPPED_LOG,
+    POKEMON_WINDOW_NAME,
+    STARTED_LOG,
+    STOPPED_LOG,
+)
+from utils.get_active_window import get_active_window
 
 
 class Auto:
@@ -40,6 +47,15 @@ def stop():
     auto.toggle_running()
 
 
+# Target window == "" its mean all window and pass
+def before_auto_check(target_window_name: str):
+    if target_window_name == "":
+        return True
+    if target_window_name in get_active_window():
+        return True
+    return False
+
+
 def auto_with_run():
     global auto
     if auto._is_running:
@@ -51,6 +67,8 @@ def auto_with_run():
         if keyboard.is_pressed(key_stop):
             stop()
             return
+        if not before_auto_check(POKEMON_WINDOW_NAME):
+            continue
         random_number = random.randint(0, 1)
         keyboard.press("4")
         keyboard.release("4")
@@ -73,6 +91,8 @@ def on_auto_press_no_run():
     while auto._is_running:
         if keyboard.is_pressed(key_stop):
             stop()
+            return
+        if not before_auto_check(POKEMON_WINDOW_NAME):
             return
         random_number = random.randint(0, 1)
         if random_number == 0:

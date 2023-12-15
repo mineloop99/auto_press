@@ -7,7 +7,7 @@ Run:
 
 Build EXE: 
     - pip install pyinstaller
-    - yarn build-pro
+    - yarn build-pro # It build to dist/PokeAuto.exe
 PRO requirement:
     Require modules: keyboard
                      tk
