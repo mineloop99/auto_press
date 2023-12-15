@@ -6,7 +6,7 @@
   "scripts": {
     "pro": "python pro_auto_find_pokemon.py",
     "get": "pip install keyboard, tk, mouse",
-    "build-pro": "pyinstaller --onefile pro_auto_find_pokemon.py" 
+    "build-pro": "pyinstaller --onefile pro_auto_find_pokemon.py --name PokeAuto.exe" 
   },
   "author": "",
   "license": "MIT"
