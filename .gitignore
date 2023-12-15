@@ -1,0 +1,4 @@
+__pycache__/
+build/
+dist/
+pro_auto_find_pokemon.spec

@@ -4,6 +4,10 @@ Run:
     python <name.py>
     OR
     yarn pro
+
+Build EXE: 
+    - pip install pyinstaller
+    - yarn build-pro
 PRO requirement:
     Require modules: keyboard
                      tk
