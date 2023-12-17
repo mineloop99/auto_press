@@ -6,3 +6,4 @@ pytesseract
 pyautogui
 opencv-python
 pyinstaller
+playsound

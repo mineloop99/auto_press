@@ -1,4 +1,4 @@
-import os
+import sys, os
 
 
 EXECUTABLE_TESSERACT_FILE = "D:\\Softwares\\Tesseract\\tesseract.exe"
@@ -20,3 +20,11 @@ def get_list_pokemon():
     file.close()
     print("Done, ", list_pokemon)
     return list_pokemon
+
+
+def resource(relative_path):
+    base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
+# Then use this function to find the asset, eg: resource("my_file")

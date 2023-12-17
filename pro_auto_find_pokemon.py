@@ -4,11 +4,12 @@ import keyboard
 import mouse
 import tkinter as tk
 import tkinter.messagebox as msgbox
+from playsound import playsound
 
 from utils.auto_pattern import seeking
 from utils.get_active_window import get_active_window
 from utils.detect_image import detect_text
-from utils.config import get_list_pokemon
+from utils.config import get_list_pokemon, resource
 
 
 class Auto:
@@ -34,7 +35,7 @@ catch_time_beetween_press = (
 key_quit_program = "q"
 key_start = "`"
 key_start_with_run_away = "-"
-key_catch_start = "insert"
+key_catch_start = "F12"
 key_stop = "="  # Must diff key start
 key_auto_move = ["a", "d"]  # Just two key only
 
@@ -96,8 +97,14 @@ def on_auto_press_no_run():
 
 
 def catch_callback():
-    stop()
-    show_message_pop_up("Catched! ", 10000000)
+    global auto
+    auto.set_running(False)
+    try:
+        playsound(resource("..\\assets\\sound\\catched_sound.mp3"))
+    except:
+        pass
+    finally:
+        show_message_pop_up("Catched! ", 10000000)
 
 
 def auto_catch():
