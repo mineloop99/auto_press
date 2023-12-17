@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pro": "python pro_auto_find_pokemon.py",
-    "get": "pip install keyboard, tk, mouse",
+    "get": "pip install -r requirement",
     "build-pro": "pyinstaller --onefile pro_auto_find_pokemon.py --name PokeAuto.exe" 
   },
   "author": "",

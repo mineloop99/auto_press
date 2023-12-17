@@ -1,0 +1,8 @@
+keyboard
+tk
+numpy
+mouse
+pytesseract
+pyautogui
+opencv-python
+pyinstaller

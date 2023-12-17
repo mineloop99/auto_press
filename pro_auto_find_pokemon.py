@@ -2,19 +2,13 @@ import sys
 from threading import Thread
 import keyboard
 import mouse
-import time
-import random
 import tkinter as tk
 import tkinter.messagebox as msgbox
 
-from const import (
-    AUTO_STARTED_LOG,
-    AUTO_STOPPED_LOG,
-    POKEMON_WINDOW_NAME,
-    STARTED_LOG,
-    STOPPED_LOG,
-)
+from utils.auto_pattern import seeking
 from utils.get_active_window import get_active_window
+from utils.detect_image import detect_text
+from utils.config import get_list_pokemon
 
 
 class Auto:
@@ -23,28 +17,40 @@ class Auto:
     def toggle_running(self):
         self._is_running = not self._is_running
 
+    def set_running(self, value: bool):
+        self._is_running = value
+
+
+POKEMON_WINDOW_NAME = "PROClient"
+list_pokemon = get_list_pokemon()
 
 auto = Auto()
+
+time_beetween_press = 0.1  # in second
+catch_time_beetween_press = (
+    0.3  # in second, at least 0.3 or it will be consume CPU to 100%
+)
+
 key_quit_program = "q"
 key_start = "`"
 key_start_with_run_away = "-"
+key_catch_start = "insert"
 key_stop = "="  # Must diff key start
-time_beetween_press = 0.1  # in second
 key_auto_move = ["a", "d"]  # Just two key only
 
 
-def show_message_pop_up(message, timeout=500):
+def show_message_pop_up(message="", timeout=500):
     root = tk.Tk()
     root.withdraw()
     root.after(timeout, root.destroy)
     msgbox.showinfo("Info", message, master=root)
 
 
-def stop():
+def stop(stop_msg="Stopped!"):
     global auto
-    print(AUTO_STOPPED_LOG)
-    show_message_pop_up(STOPPED_LOG)
-    auto.toggle_running()
+    print("Auto " + stop_msg)
+    show_message_pop_up(stop_msg)
+    auto.set_running(False)
 
 
 # Target window == "" its mean all window and pass
@@ -61,24 +67,16 @@ def auto_with_run():
     if auto._is_running:
         return
     auto.toggle_running()
-    print(AUTO_STARTED_LOG)
-    show_message_pop_up(STARTED_LOG)
+    print("With Run")
+    show_message_pop_up("With Run Started")
     while auto._is_running:
         if keyboard.is_pressed(key_stop):
-            stop()
+            stop("Auto With Run")
             return
         if not before_auto_check(POKEMON_WINDOW_NAME):
             continue
-        random_number = random.randint(0, 1)
-        keyboard.press("4")
-        keyboard.release("4")
-        if random_number == 0:
-            keyboard.press(key_auto_move[0])
-        elif random_number == 1:
-            keyboard.press(key_auto_move[1])
-        time.sleep(time_beetween_press)
-        keyboard.release(key_auto_move[0])
-        keyboard.release(key_auto_move[1])
+        keyboard.press_and_release("4")
+        seeking(time_beetween_press, key_auto_move)
 
 
 def on_auto_press_no_run():
@@ -86,22 +84,41 @@ def on_auto_press_no_run():
     if auto._is_running:
         return
     auto.toggle_running()
-    print(AUTO_STARTED_LOG)
-    show_message_pop_up(STARTED_LOG)
+    print("With No Run")
+    show_message_pop_up("With No Run Started!")
     while auto._is_running:
         if keyboard.is_pressed(key_stop):
-            stop()
+            stop("Auto With No Run Stopped!")
             return
         if not before_auto_check(POKEMON_WINDOW_NAME):
+            continue
+        seeking(time_beetween_press, key_auto_move)
+
+
+def catch_callback():
+    stop()
+    show_message_pop_up("Catched! ", 10000000)
+
+
+def auto_catch():
+    global auto
+    if auto._is_running:
+        return
+    auto.toggle_running()
+    print("Catch Started!")
+    show_message_pop_up("Catch Started!")
+    while auto._is_running:
+        if keyboard.is_pressed(key_stop):
+            stop("Auto Catch Stopped!")
             return
-        random_number = random.randint(0, 1)
-        if random_number == 0:
-            keyboard.press(key_auto_move[0])
-        elif random_number == 1:
-            keyboard.press(key_auto_move[1])
-        time.sleep(time_beetween_press)
-        keyboard.release(key_auto_move[0])
-        keyboard.release(key_auto_move[1])
+        if not before_auto_check(POKEMON_WINDOW_NAME):
+            continue
+        thread_auto = Thread(
+            target=detect_text, args=[list_pokemon, "4", catch_callback]
+        )
+        thread_auto.daemon = True
+        thread_auto.start()
+        seeking(catch_time_beetween_press, key_auto_move)
 
 
 def on_auto_press_with_run():
@@ -119,14 +136,19 @@ def exit_program():
     sys.exit(0)
 
 
-keyboard.add_hotkey(key_start, on_auto_press_no_run)
-keyboard.add_hotkey(key_start_with_run_away, on_auto_press_with_run)
-keyboard.add_hotkey(key_quit_program, exit_program)
-mouse.on_button(on_auto_mouse_press_with_run, (), mouse.X2, mouse.UP)
+def main():
+    keyboard.add_hotkey(key_start, on_auto_press_no_run)
+    keyboard.add_hotkey(key_start_with_run_away, on_auto_press_with_run)
+    keyboard.add_hotkey(key_catch_start, auto_catch)
+    keyboard.add_hotkey(key_quit_program, exit_program)
+    mouse.on_button(on_auto_mouse_press_with_run, (), mouse.X2, mouse.UP)
 
-thread_mouse = Thread(target=mouse.wait)
-print("Mouse listen is starting!")
-thread_mouse.daemon = True
-thread_mouse.start()
-print("Keyboard listen is starting!")
-keyboard.wait()
+    thread_mouse = Thread(target=mouse.wait)
+    print("Mouse listen is starting!")
+    thread_mouse.daemon = True
+    thread_mouse.start()
+    print("Keyboard listen is starting!")
+    keyboard.wait()
+
+
+main()

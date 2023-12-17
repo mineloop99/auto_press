@@ -1,14 +1,33 @@
+Requirement:
+    tesseract download binaries: https://github.com/UB-Mannheim/tesseract/wiki
+
+    set Path to tesseract.exe to config_file = utils/config.py
+
 Install:
-    pip install keyboard, tk, mouse
+    pip install -r requirement.txt
+
 Run:
     python <name.py>
     OR
     yarn pro
 
 Build EXE: 
-    - pip install pyinstaller
+    - pip install -r requirement.txt
     - yarn build-pro # It build to dist/PokeAuto.exe
-PRO requirement:
-    Require modules: keyboard
-                     tk
-                     mouse
+
+* Lưu ý:
+ - Must:
+    a. Khi Auto Catch để PROClient ở phía phải trên màng hình, hoặc config trong utils/meta.py
+    b. Config lại pokemon cần catch xuống dòng, và không có dấu cách trong tên ở pokemon.txt. VD: Nidoran-M -> Nidoranm... Tên có thể in hoa tuỳ ý.
+
+ - Don't:
+    a. Không nên config quá nhiều pokemon, nên nhỏ hơn 5 con.
+    b. Không mang theo pokemon cần bắt vì sẽ tự detect và tắt nếu thấy tên trên màng hình.
+
+ - Good to have:
+    a. nên config lại phím nếu cần trong file mai(pro_auto_find_pokemon.py).
+    b. nên để file <main>.py hoặc .exe cùng folder với file pokemon.txt
+
+ - Others:
+    a. Khi gặp pokemon cần sẽ tự tắt auto.
+    b. File khi build xong sẽ nằm trong dist/PokeAuto.exe
