@@ -1,6 +1,8 @@
 import sys, os
+from dotenv import load_dotenv
 
-EXECUTABLE_TESSERACT_FILE = "D:\\Softwares\\Tesseract\\tesseract.exe"
+load_dotenv()
+EXECUTABLE_TESSERACT_FILE = os.getenv("EXECUTABLE_TESSERACT_FILE")
 
 
 def get_list_pokemon():
