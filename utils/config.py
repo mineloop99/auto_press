@@ -1,6 +1,5 @@
 import sys, os
 
-
 EXECUTABLE_TESSERACT_FILE = "D:\\Softwares\\Tesseract\\tesseract.exe"
 
 

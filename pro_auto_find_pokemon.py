@@ -6,6 +6,7 @@ import tkinter as tk
 import tkinter.messagebox as msgbox
 from playsound import playsound
 
+
 from utils.auto_pattern import seeking
 from utils.get_active_window import get_active_window
 from utils.detect_image import detect_text
@@ -120,8 +121,9 @@ def auto_catch():
             return
         if not before_auto_check(POKEMON_WINDOW_NAME):
             continue
+        msg = "Catched" + ", ".join(list_pokemon)
         thread_auto = Thread(
-            target=detect_text, args=[list_pokemon, "4", catch_callback]
+            target=detect_text, args=[list_pokemon, "4", msg, catch_callback]
         )
         thread_auto.daemon = True
         thread_auto.start()
