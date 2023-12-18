@@ -8,3 +8,4 @@ opencv-python
 pyinstaller
 playsound
 python-telegram-bot
+python-dotenv
